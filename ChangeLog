@@ -1,0 +1,75 @@
+------------------------------------------------------------
+revno: 6
+committer: Brian Harring <ferringb@gentoo.org>
+branch nick: tarsync
+timestamp: Sun 2006-07-23 20:58:20 -0700
+message:
+  fix up generation to include changelog dumps
+modified:
+  Makefile
+------------------------------------------------------------
+revno: 5
+committer: Brian Harring <ferringb@gentoo.org>
+branch nick: tarsync
+timestamp: Tue 2006-07-18 23:16:56 -0700
+message:
+  never test for == -1 for strcmp, always test for less then 0
+modified:
+  main.c
+------------------------------------------------------------
+revno: 4
+committer: Brian Harring <ferringb@gentoo.org>
+branch nick: tarsync
+timestamp: Tue 2006-07-18 23:16:34 -0700
+message:
+  honor external CC
+modified:
+  Makefile
+------------------------------------------------------------
+revno: 3
+committer: bharring
+branch nick: tarsync.bzr
+timestamp: Sat 2005-10-29 17:42:47 -0700
+message:
+  [project @ 2005-10-29 17:42:47 by bharring]
+  build against diffball provided libcfile
+removed:
+  cfile.c
+  cfile.h
+modified:
+  Makefile
+  main.c
+------------------------------------------------------------
+revno: 2
+committer: bharring
+branch nick: tarsync.bzr
+timestamp: Sat 2005-10-01 10:48:16 -0700
+message:
+  [project @ 2005-10-01 10:48:16 by bharring]
+  import
+------------------------------------------------------------
+revno: 1
+committer: bharring
+branch nick: tarsync.bzr
+timestamp: Sat 2005-10-01 10:48:16 -0700
+message:
+  [project @ 2005-10-01 10:48:16 by bharring]
+  import
+added:
+  Makefile
+  cfile.c
+  cfile.h
+  defs.h
+  excludes.c
+  excludes.h
+  fs.c
+  fs.h
+  main.c
+  names.c
+  names.h
+  options.c
+  options.h
+  string-misc.c
+  string-misc.h
+  tar.c
+  tar.h
