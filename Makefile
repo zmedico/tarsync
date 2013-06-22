@@ -2,7 +2,7 @@ ifndef CC
 	CC=gcc
 endif
 tarsync:	main.o names.o tar.o string-misc.o fs.o options.o excludes.o
-	gcc $(CFLAGS) $^ -o tarsync -lcfile
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o tarsync -lcfile
 all:		tarsync
 
 clean:	
