@@ -106,7 +106,7 @@ build_exclude(fnm_exclude **ex_ptr, const char *pattern)
 }
 
 
-inline int
+int
 match_excludes(const char *dir, const char *file, fnm_exclude **excludes)
 {
 	char *p;

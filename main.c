@@ -42,8 +42,8 @@ int remove_node(const char *path, struct stat *st);
 int ensure_files_layout(const tar_entry **ttar, const unsigned int ttar_count, tar_entry ***missing, 
 	unsigned int *missing_count, tar_entry ***existing, unsigned int *existing_count,
 	fnm_exclude **excludes);
-inline int check_existing_node(const struct dirent *de, const tar_entry *t, struct stat *st);
-inline int enforce_owner(const char *path, const tar_entry *t, struct stat *st);
+int check_existing_node(const struct dirent *de, const tar_entry *t, struct stat *st);
+int enforce_owner(const char *path, const tar_entry *t, struct stat *st);
 int copy_whole_file(cfile *tar_cfh, const tar_entry *ttent);
 
 static int check_mtime = 1;
@@ -669,7 +669,7 @@ recursively_delete_dir(const char *path)
 	return ret;
 }
 
-inline int
+int
 check_existing_node(const struct dirent *de, const tar_entry *t, struct stat *st)
 {
 	int type;
@@ -685,7 +685,7 @@ check_existing_node(const struct dirent *de, const tar_entry *t, struct stat *st
 	return 0;
 }
 
-inline int
+int
 enforce_owner(const char *path, const tar_entry *t, struct stat *st)
 {
 	struct stat st2;

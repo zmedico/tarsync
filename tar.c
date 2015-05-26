@@ -40,7 +40,7 @@ int check_str_chksum(const char *block)
 
 /* possibly this could be done different, what of endptr of strtol?
    Frankly I worry about strtol trying to go too far and causing a segfault, due to tar fields not always having trailing \0 */
-inline unsigned long octal_str2long(const char *string, unsigned int length)
+unsigned long octal_str2long(const char *string, unsigned int length)
 {
 	if(string[length]) {
 		char *ptr = strndup(string, length);
