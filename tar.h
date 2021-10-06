@@ -78,6 +78,8 @@ typedef struct {
 	off_u64			size;
 	unsigned int	fullname_len;
 	char			*fullname;
+	unsigned int	linkname_len;
+	char			*linkname;
 	time_t			mtime;
 	uid_t			uid;
 	gid_t			gid;

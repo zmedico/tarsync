@@ -257,7 +257,14 @@ main(int argc, char **argv)
 	// no need to seek.  cfile handles resetting streams as needed
 	
 	for(x=0; x < missing_count; x++) {
-		if(copy_whole_file(&tar_cfh, missing[x]) != 0) {
+		if (missing[x]->type == SYMTYPE) {
+			if(copy_symlink(&tar_cfh, missing[x]) != 0) {
+				v0printf("failed transfering symlink %s\n", missing[x]->fullname);
+				exit(9);
+			}
+			continue;
+		}
+		else if(copy_whole_file(&tar_cfh, missing[x]) != 0) {
 			v0printf("failed transfering file %s\n", missing[x]->fullname);
 			exit(9);
 		}
@@ -673,6 +680,8 @@ int
 check_existing_node(const struct dirent *de, const tar_entry *t, struct stat *st)
 {
 	int type;
+	unsigned char linkname[TAR_LINKNAME_LEN];
+	ssize_t linkname_len;
 	type = convert_lstat_type_tar_type(de->d_name, st);
 	if(type < 0)
 		return -1;
@@ -682,6 +691,15 @@ check_existing_node(const struct dirent *de, const tar_entry *t, struct stat *st
 		return 2;
 	if(REGTYPE == type && (st->st_size != t->size || (check_mtime && t->mtime != st->st_mtime)))
 		return 3;
+	if (SYMTYPE == type) {
+		if ((linkname_len = readlink(de->d_name, linkname, TAR_LINKNAME_LEN)) == -1) {
+			return -1;
+		}
+		if(strncmp((const char *)linkname, (const char *)t->linkname, linkname_len) != 0) {
+			remove_node(de->d_name, st);
+			return 3;
+		}
+	}
 	return 0;
 }
 
@@ -703,7 +721,22 @@ enforce_owner(const char *path, const tar_entry *t, struct stat *st)
 	}
 	return 0;
 }
-	
+
+int
+copy_symlink(cfile *tar_cfh, const tar_entry *ttent)
+{
+	v1printf("creating %s\n", ttent->fullname);
+
+	if (symlink(ttent->linkname, ttent->fullname) != 0) {
+		v0printf("failed creating symlink %s -> %s\n", ttent->fullname, ttent->linkname);
+		return -1;
+	}
+	if(lchown(ttent->fullname, ttent->uid, ttent->gid) != 0) {
+		v0printf("failed chown'ing %s\n", ttent->fullname);
+		return -1;
+	}
+	return 0;
+}
 
 int
 copy_whole_file(cfile *tar_cfh, const tar_entry *ttent) 

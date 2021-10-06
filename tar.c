@@ -214,8 +214,7 @@ read_entry(cfile *src_cfh, off_u64 start, tar_entry *entry)
 		case AREGTYPE:
 			entry->type = REGTYPE;	break;
 		case SYMTYPE:
-			v0printf("symlinks not supported\n");
-			entry->type = TTAR_UNSUPPORTED_TYPE; break;
+			entry->type = SYMTYPE; break;
 		case LNKTYPE:
 			v0printf("hardlinks not supported!\n");
 			entry->type = TTAR_UNSUPPORTED_TYPE; break;
@@ -242,6 +241,17 @@ read_entry(cfile *src_cfh, off_u64 start, tar_entry *entry)
 	if(get_uid(block + TAR_UNAME_LOC, &entry->uid))
 		entry->uid = octal_str2long(block + TAR_UID_LOC, TAR_UID_LOC);
 
+	if (entry->type == SYMTYPE) {
+		name_len = strnlen((char *)block + TAR_LINKNAME_LOC, TAR_LINKNAME_LEN);
+		if((entry->linkname = (char *)malloc(name_len + 1)) == NULL){
+			v0printf("unable to allocate needed memory, bailing\n");
+			return MEM_ERROR;
+		}
+		memcpy(entry->linkname, block + TAR_LINKNAME_LOC, name_len);
+		entry->linkname[name_len] = '\0';
+		entry->linkname_len = name_len;
+	}
+
 //	if(entry->end % 512)
 //		entry->end += 512 - (entry->end % 512);
 	return 0;
@@ -256,6 +266,8 @@ convert_lstat_type_tar_type(const char *path, struct stat *st)
 	if(S_ISREG(st->st_mode)) {
 		if(st->st_nlink == 1)
 			return REGTYPE;
+	} else if(S_ISLNK(st->st_mode)) {
+			return SYMTYPE;
 	} else if(S_ISDIR(st->st_mode))
 			return DIRTYPE;
 
