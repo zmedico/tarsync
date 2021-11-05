@@ -16,7 +16,7 @@
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, US 
 */
 #include <stdio.h>
-#include "string-misc.h"
+#include <string.h>
 #include <stdlib.h>
 #include "defs.h"
 #include "tar.h"
@@ -79,9 +79,9 @@ read_fh_to_tar_entry(cfile *src_cfh, tar_entry **tar_entries,
 
 		if(0 == err) {
 			if(strip_dir) {
-				p = index(entries[count].fullname, '/');
+				p = strchr(entries[count].fullname, '/');
 				for(strip_count = 1; strip_count < strip_dir && NULL != p; strip_count++)
-					p = index(p + 1, '/');
+					p = strchr(p + 1, '/');
 				if(NULL == p) {
 					// couldn't do required strip.  puke it.
 					v0printf("failed attempting to strip %i dirs from entry '%s'\n", strip_dir, entries[count].fullname);

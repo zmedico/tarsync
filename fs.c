@@ -65,8 +65,8 @@ ensure_dirs(const char *path, mode_t mode, uid_t uid, gid_t gid)
 			
 			p2 = strdup(path);
 
-			if('/' == *p2)		p = index(p2 + 1, '/');
-			else 				p=index(p2, '/');
+			if('/' == *p2)		p = strchr(p2 + 1, '/');
+			else 				p=strchr(p2, '/');
 
 			// loop creating dirs as normal user.
 			while(NULL != p) {
@@ -78,12 +78,12 @@ ensure_dirs(const char *path, mode_t mode, uid_t uid, gid_t gid)
 						return -1;
 				}
 				*p = '/';
-				p = index(p + 1, '/');
+				p = strchr(p + 1, '/');
 			}
 		} else if(ENOTDIR == errno) {
 			p2 = strdup(path);
-			if('/' == *p2)		p = index(p2 + 1, '/');
-			else 				p=index(p2, '/');
+			if('/' == *p2)		p = strchr(p2 + 1, '/');
+			else 				p=strchr(p2, '/');
 
 			// wipe file where it's found, and create dirs as normal user.
 			while(NULL != p) {
@@ -97,7 +97,7 @@ ensure_dirs(const char *path, mode_t mode, uid_t uid, gid_t gid)
 						return -1;
 				}
 				*p = '/';
-				p = index(p + 1, '/');
+				p = strchr(p + 1, '/');
 			}
 		} else
 			return -1;

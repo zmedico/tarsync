@@ -329,8 +329,8 @@ cmp_tar_entries_name(const void *te1, const void *te2)
 	cur = next = 0;
 
 	do {
-		p1 = index(TTENT_PTR(te1)->fullname + cur, '/');
-		p2 = index(TTENT_PTR(te2)->fullname + cur, '/');
+		p1 = strchr(TTENT_PTR(te1)->fullname + cur, '/');
+		p2 = strchr(TTENT_PTR(te2)->fullname + cur, '/');
 		if(NULL == p1 && NULL != p2)
 			return 	-1;
 		else if(NULL != p1 && NULL == p2)
@@ -442,7 +442,7 @@ tar_entry ***existing_ptr, unsigned int *existing_count, fnm_exclude **excludes)
 			while(dirs_deep--)
 				chdir("..");
 			
-			p = rindex(ttar[x]->fullname, '/');
+			p = strrchr(ttar[x]->fullname, '/');
 			dirs_deep=0;
 			if(NULL == p) {
 				p = strdup(".");
@@ -452,7 +452,7 @@ tar_entry ***existing_ptr, unsigned int *existing_count, fnm_exclude **excludes)
 				p = strndup(ttar[x]->fullname, p + 1 - ttar[x]->fullname);
 				curdir_name = strdup(p);
 				d = p;
-				while((d = index(d, '/')) != NULL) {
+				while((d = strchr(d, '/')) != NULL) {
 					dirs_deep++;
 					d++;
 				}
@@ -473,7 +473,7 @@ tar_entry ***existing_ptr, unsigned int *existing_count, fnm_exclude **excludes)
 			check_match_ret(curdir_name, ttar[x]->fullname + curdir_len, ret);
 			if(ret && TTAR_ISDIR(ttar[x])) {
 				// well. the dir was matched.
-				v0printf("not digging into dir %s (via %s) or it's children due to exclussion\n", p, ttar[x]->fullname);
+				v0printf("not digging into dir %s (via %s) or it's children due to exclusion\n", p, ttar[x]->fullname);
 				while(x < ttar_count && ttar[x]->fullname_len > curdir_len && 
 					0 == strncmp(ttar[x]->fullname, curdir_name, curdir_len)) {
 					x++;
@@ -483,7 +483,9 @@ tar_entry ***existing_ptr, unsigned int *existing_count, fnm_exclude **excludes)
 			}
 
 			if((dir_count = scandir(p, &dir_ent, 0, alphasort)) < 0) {
-				v0printf("2 malloc failure on %s %s, %s\n", ttar[x]->fullname, p, get_current_dir_name());
+				char *buf = NULL;
+				v0printf("2 malloc failure on %s %s, %s\n", ttar[x]->fullname, p, getcwd(buf, 0));
+				free(buf);
 				return -1;
 			}
 			if(dirs_deep >0 && chdir(curdir_name)!=0) {
@@ -501,7 +503,7 @@ tar_entry ***existing_ptr, unsigned int *existing_count, fnm_exclude **excludes)
 			}
 			if(x > ttar_count || curdir_len > ttar[x]->fullname_len || 
 				strncmp(ttar[x]->fullname, curdir_name, curdir_len) != 0 ||
-				(p = index(ttar[x]->fullname + curdir_len + 1, '/')) != NULL) {
+				(p = strchr(ttar[x]->fullname + curdir_len + 1, '/')) != NULL) {
 	
 				// so ttar has moved onto another dir.  meaning it's time to wax any remaining dirents
 				
@@ -579,7 +581,7 @@ tar_entry ***existing_ptr, unsigned int *existing_count, fnm_exclude **excludes)
 		// make sure we've moved to the new curdir in tar_ents
 		while(x < ttar_count && ttar[x]->fullname_len > curdir_len && 
 			0 == strncmp(ttar[x]->fullname, curdir_name, curdir_len) &&
-			index(ttar[x]->fullname + curdir_len, '/') == NULL) {
+			strchr(ttar[x]->fullname + curdir_len, '/') == NULL) {
 			ret = match_excludes(curdir_name, ttar[x]->fullname + curdir_len, excludes);
 			check_match_ret(curdir_name, ttar[x]->fullname + curdir_len, ret);
 			if(!ret) {
@@ -603,10 +605,10 @@ tar_entry ***existing_ptr, unsigned int *existing_count, fnm_exclude **excludes)
 	}	
 
 	// rewind dir.
-	p = index(curdir_name, '/');
+	p = strchr(curdir_name, '/');
 	while(NULL != p) {
 		chdir("..");
-		p = index(p + 1, '/');
+		p = strchr(p + 1, '/');
 	}
 	return 0;
 }
@@ -658,7 +660,7 @@ recursively_delete_dir(const char *path)
 	closedir(curdir);
 	char *p, *d;
 	d=strdup(path);
-	p = rindex(d, '/');
+	p = strrchr(d, '/');
 	if(NULL == p)
 		p = d;
 
@@ -668,7 +670,7 @@ recursively_delete_dir(const char *path)
 		if(ret == 0)
 			ret = rmdir(p);
 		*p = '\0';
-		p = rindex(d, '/');
+		p = strrchr(d, '/');
 		if(p != NULL)
 			p++;
 	} while (NULL != p);

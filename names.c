@@ -19,7 +19,7 @@
 #include <sys/types.h>
 #include <grp.h>
 #include <pwd.h>
-#include "string-misc.h"
+#include <string.h>
 
 #ifndef NULL
 #define NULL 0

@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <fnmatch.h>
-#include "string-misc.h"
+#include <string.h>
 #include "excludes.h"
 #include "defs.h"
 
@@ -52,7 +52,7 @@ build_exclude(fnm_exclude **ex_ptr, const char *pattern)
 	} else {
 		exclude->anchored = 0;
 	}
-	p = rindex(pat, '/');
+	p = strrchr(pat, '/');
 	if(NULL != p && '\0' == *(p+1))
 		exclude->anchored |= TAIL_ANCHORED;
 
@@ -84,7 +84,7 @@ build_exclude(fnm_exclude **ex_ptr, const char *pattern)
 		return 1;
 	}
 
-	p = rindex(pat, '/');
+	p = strrchr(pat, '/');
 	if (NULL == p) {
 		// not bound to a dir exempting anchors
 		exclude->dir = NULL;
