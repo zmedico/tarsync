@@ -22,7 +22,7 @@
 #include <getopt.h>
 
 //move this. but to where?
-#define EXIT_USAGE -2
+#define EXIT_USAGE (-2)
 
 
 struct usage_options {
