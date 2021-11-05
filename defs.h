@@ -21,7 +21,7 @@
 //#include "config.h"
 #include <errno.h>
 
-#define VERSION "0.1"
+#define VERSION "0.2.2"
 
 #define MAX(x,y) ((x) > (y) ? (x) : (y))
 #define MIN(x,y) ((x) < (y) ? (x) : (y))
