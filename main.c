@@ -17,7 +17,6 @@
 */
 
 #include <stdlib.h>
-#include <errno.h>
 #include <unistd.h>
 #include <string.h>
 #include <sys/stat.h>

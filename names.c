@@ -19,7 +19,6 @@
 #include <sys/types.h>
 #include <grp.h>
 #include <pwd.h>
-#include <stdio.h>
 #include "string-misc.h"
 
 #ifndef NULL

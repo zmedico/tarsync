@@ -18,7 +18,6 @@
 #include <stdio.h>
 #include "string-misc.h"
 #include <stdlib.h>
-#include <unistd.h>
 #include "defs.h"
 #include "tar.h"
 #include "names.h"
