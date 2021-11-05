@@ -19,7 +19,6 @@
 #ifndef _HEADER_DEFS
 #define _HEADER_DEFS 1
 
-//#include "config.h"
 #include <errno.h>
 
 #define VERSION "0.2.2"
@@ -40,10 +39,6 @@ typedef off_s32 off_s64;
 #endif
 typedef unsigned long long act_off_u64;
 typedef signed   long long act_off_s64;
-
-#define MAX_SEED_LEN	65535
-#define MAX_SAMPLE_RATE	32767
-#define MAX_HASH_SIZE	2147483647	//if you have 2gb for a hash size... yeah, feel free to donate hardware/memory to me :)
 
 #define PATCH_TRUNCATED		(-1)
 #define PATCH_CORRUPT_ERROR 	(-2)
@@ -71,8 +66,6 @@ typedef signed   long long act_off_s64;
 #define v4printf(expr...)  { if(global_verbosity>3){fprintf(stderr,expr);};}
 #endif
 
-#define SLEEP_DEBUG 1
-
 #ifdef DEBUG_CFILE
 #include <stdio.h>
 #define dcprintf(fmt...) \
@@ -82,15 +75,4 @@ typedef signed   long long act_off_s64;
 #define dcprintf(expr...) ((void) 0);
 #endif
 
-typedef unsigned char 	DCB_SRC_ID;
-typedef signed int 	EDCB_SRC_ID;
-
-#include <limits.h>
-#ifndef PATH_MAX
-#define MAXPATHLEN 4096
-#else
-#define MAXPATH	PATH_MAX
 #endif
-
-#endif
-

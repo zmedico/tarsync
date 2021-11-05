@@ -67,7 +67,7 @@ static struct usage_options help_opts[] = {
 	FORMAT_HELP_OPTION("overide-group", 'g', "Ensure files have this username, instead of what the tarball states"),
 	FORMAT_HELP_OPTION("exclude-fnmatch",'e',"Specify a glob pattern for excluding files."),
 	FORMAT_HELP_OPTION("preserve", 'p', "Enforce tarball permissions, rather then users (modified by -o and -g)."),
-	USAGE_FLUFF("tarsync expects two args, a tarball (can be bzip2 or gzip compressed), and a name for the directory to 'sync'\n"
+	USAGE_FLUFF("tarsync expects two args, a tarball (can be compressed), and a name for the directory to 'sync'\n"
 	"up to the tarballs contents\n"
 	"Example usage: tarsync --strip-dir 1 portage-20050511.tar.bz2 /usr/portage"),
 	END_HELP_OPTS

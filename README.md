@@ -20,7 +20,7 @@ tarsync [flags] [options] tarball directory target
   -p --preserve        Enforce tarball permissions, rather then users (modified by -o and -g).
 ```
 
-`tarsync` expects two args, a tarball (can be bzip2 or gzip compressed), and
+`tarsync` expects two args, a tarball (can be compressed), and
 a name for the directory to 'sync' up to the tarballs contents.
 
 Example usage:
