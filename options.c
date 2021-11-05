@@ -78,10 +78,12 @@ print_usage(const char *prog, const char *usage_portion, struct usage_options *t
 void
 print_version(const char *prog)
 {
-    fprintf(stdout,"tarsync version %s (C) 2005 Brian Harring\n", VERSION);
-    fprintf(stdout,"http://dev.gentoo.org/~ferringb/tarsync\n");
+    fprintf(stdout,"tarsync version %s\n", VERSION);
+    fprintf(stdout, "(C) 2003-2005 Brian Harring\n");
+    fprintf(stdout, "(C) 2021 tarsync contributors\n");
+    fprintf(stdout,"https://github.com/zmedico/tarsync\n");
     fprintf(stdout,"THIS SOFTWARE COMES WITH ABSOLUTELY NO WARRANTY! USE AT YOUR OWN RISK!\n");
-    fprintf(stdout,"Report bugs to <ferringb@gentoo.org>\n\n");
+    fprintf(stdout,"Report bugs to https://github.com/zmedico/tarsync/issues\n\n");
 }
 
 char *
