@@ -91,7 +91,7 @@ typedef struct {
 #define TTAR_ISREG(x)	(REGTYPE == (x)->type)
 
 int check_str_chksum(const char *entry);
-inline unsigned long octal_str2long(const char *string, unsigned int length);
+unsigned long octal_str2long(const char *string, unsigned int length);
 signed int read_fh_to_tar_entry(cfile *src_fh, tar_entry **tar_entries, unsigned int *total_count, unsigned int strip_dirs);
 int read_entry(cfile *src_cfh, off_u64 start, tar_entry *te);
 int readh_cfh_to_tar_entries(cfile *src_cfh, tar_entry ***file, 

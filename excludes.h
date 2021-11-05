@@ -30,7 +30,7 @@ typedef struct {
 #define START_ANCHORED	0x1
 #define TAIL_ANCHORED	0x2
 
-inline int match_excludes(const char *dir, const char *file, fnm_exclude **excludes);
+int match_excludes(const char *dir, const char *file, fnm_exclude **excludes);
 int build_exclude(fnm_exclude **excludes, const char *pattern);
 int optimize_excludes(char *dpath, fnm_exclude **excludes);
 

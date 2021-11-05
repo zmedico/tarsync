@@ -44,6 +44,7 @@ int ensure_files_layout(const tar_entry **ttar, const unsigned int ttar_count, t
 	fnm_exclude **excludes);
 int check_existing_node(const struct dirent *de, const tar_entry *t, struct stat *st);
 int enforce_owner(const char *path, const tar_entry *t, struct stat *st);
+int copy_symlink(cfile *tar_cfh, const tar_entry *ttent);
 int copy_whole_file(cfile *tar_cfh, const tar_entry *ttent);
 
 static int check_mtime = 1;
