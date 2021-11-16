@@ -32,9 +32,16 @@ tarsync --strip-dir 1 portage-20050511.tar.bz2 /usr/portage
 Compilation
 ===========
 
-tarsync requires libcfile library from [diffball](https://github.com/zmedico/diffball) utility.
+tarsync requires cmake and libcfile library from [diffball](https://github.com/zmedico/diffball) utility.
 
-Just `make` from project's source dir.
+To compile project, run:
+
+```shell
+cmake -B build
+cmake --build build
+```
+
+Compiled executable will be placed in `build` subdirectory.
 
 License
 =======

@@ -21,6 +21,7 @@
 #include <string.h>
 #include "defs.h"
 #include "options.h"
+#include "version.h"
 
 void
 print_usage(const char *prog, const char *usage_portion, struct usage_options *text, int exit_code) {
